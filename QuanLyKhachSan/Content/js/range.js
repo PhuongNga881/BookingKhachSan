@@ -26,7 +26,7 @@
 
   numberS.forEach(function(el) {
     el.oninput = function() {
-			var number1 = parseFloat(numberS[0].value),
+        var number1 = parseFloat(numberS[0].value),
 					number2 = parseFloat(numberS[1].value);
 			
       if (number1 > number2) {

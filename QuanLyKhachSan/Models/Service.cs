@@ -16,7 +16,7 @@ namespace QuanLyKhachSan.Models
         [StringLength(255)]
         [Required]
         public string name { get; set; }
-
+        [Range(0, int.MaxValue)]
         public int cost { get; set; }
 
         public virtual ICollection<BookingService> BookingServices { get; set; }

@@ -17,7 +17,7 @@
         }
 </style>
 @{ var userInfomatiom = (QuanLyKhachSan.Models.User)Session["USER"]; }
-<div class="hero-wrap js-fullheight" style="background-image: url('https://onetouchmedia.vn/wp-content/uploads/2019/10/N.NT-65-1024x683.jpg'); height: 400px ">
+<div class="hero-wrap js-fullheight" style="background-image: url('/Content/images/@ViewBag.Room.image'); height: 400px ">
     <div class="overlay"></div>
     <div class="container">
         <div class="row no-gutters slider-text js-fullheight align-items-center justify-content-center" data-scrollax-parent="true">
@@ -201,7 +201,7 @@
                                     <div class="col-md-6">
                                         <label>Ngày đi:</label>
                                         <div class="form-group">
-                                            <input type="date" min="@DateTime.Now.AddDays(1).ToString("yyyy-MM-dd")" name="checkOutDate" class="form-control" required placeholder="Date from">
+                                            <input type="date" min="@DateTime.Now.AddDays(1).ToString("yyyy-MM-dd")" id="checkOutDate" name="checkOutDate" class="form-control" required placeholder="Date from">
                                         </div>
                                     </div>
                                     <div class="col-md-12">
@@ -235,77 +235,78 @@
             </div> <!-- .col-md-8 -->
         </div>
     </div>
+    
     <script>
-        const stars = document.querySelectorAll(".star1");
-        var numberStart = 5;
-        for (let i = 0; i < stars.length; i++) {
-            stars[i].addEventListener("click", function () {
-                numberStart =i+1
-                resetStars();
-                setActiveStars(i);
-            });
+     const stars = document.querySelectorAll(".star1");
+     var numberStart = 5;
+     for (let i = 0; i < stars.length; i++) {
+         stars[i].addEventListener("click", function () {
+             numberStart =i+1
+             resetStars();
+             setActiveStars(i);
+         });
 
-            stars[i].addEventListener("mouseover", function () {
-                numberStart = i + 1
-                resetStars();
-                setActiveStars(i);
-            });
+         stars[i].addEventListener("mouseover", function () {
+             numberStart = i + 1
+             resetStars();
+             setActiveStars(i);
+         });
 
-         @*   stars[i].addEventListener("mouseout", function () {
-                resetStars();
-            });*@
-        }
-        const commentForm = document.querySelector("#comment-form");
-        const commentInput = document.querySelector("#comment-input");
+      @*   stars[i].addEventListener("mouseout", function () {
+             resetStars();
+         });*@
+     }
+     const commentForm = document.querySelector("#comment-form");
+     const commentInput = document.querySelector("#comment-input");
 
-        const commentList = document.querySelector("#comment-list");
+     const commentList = document.querySelector("#comment-list");
 
-        commentForm.addEventListener("submit", function (event) {
-            event.preventDefault();
-            const comment = commentInput.value.trim();
-            if (comment !== "") {
-                addComment(comment);
-                commentInput.value = "";
-            }
-        });
-        //
+     commentForm.addEventListener("submit", function (event) {
+         event.preventDefault();
+         const comment = commentInput.value.trim();
+         if (comment !== "") {
+             addComment(comment);
+             commentInput.value = "";
+         }
+     });
+     //
 
-        function postComment() {
-            const idRoom = $('#room-id').val();
-            $.ajax({
-                url: '/PublicRoom/PostComment',
-                type: "post",
-                data: {
-                    comment: commentInput.value.trim(),
-                    idRoom: idRoom,
-                    star: numberStart
-                },
-                success: function (data) {
-                    window.location.href = 'https://localhost:44385/PublicRoom/DetailRoom/' + idRoom;
-                },
-                error: function (e) {
-                    alert(e)
-                }
-            });
-        }
+     function postComment() {
+         const idRoom = $('#room-id').val();
+         $.ajax({
+             url: '/PublicRoom/PostComment',
+             type: "post",
+             data: {
+                 comment: commentInput.value.trim(),
+                 idRoom: idRoom,
+                 star: numberStart
+             },
+             success: function (data) {
+                 window.location.href = 'https://localhost:44385/PublicRoom/DetailRoom/' + idRoom;
+             },
+             error: function (e) {
+                 alert(e)
+             }
+         });
+     }
 
-        function addComment(comment) {
-            const newComment = document.createElement("li");
-            newComment.textContent = comment;
-            commentList.appendChild(newComment);
-        }
-        function resetStars() {
-            for (let i = 0; i < stars.length; i++) {
-                stars[i].classList.remove("active");
-            }
-        }
+     function addComment(comment) {
+         const newComment = document.createElement("li");
+         newComment.textContent = comment;
+         commentList.appendChild(newComment);
+     }
+     function resetStars() {
+         for (let i = 0; i < stars.length; i++) {
+             stars[i].classList.remove("active");
+         }
+     }
 
-        function setActiveStars(index) {
-            for (let i = 0; i <= index; i++) {
-                console.log(stars[i].classList)
-                stars[i].classList.add("active");
-            }
-        }
+     function setActiveStars(index) {
+         for (let i = 0; i <= index; i++) {
+             console.log(stars[i].classList)
+             stars[i].classList.add("active");
+         }
+     }
 
     </script>
 </section>

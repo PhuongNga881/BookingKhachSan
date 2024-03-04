@@ -32,12 +32,14 @@ namespace QuanLyKhachSan.Controllers.Public
         public ActionResult DetailRoom(int id,string mess)
         {
             ViewBag.mess = mess;
+            
             ViewBag.listComment = roomComment.GetByIdRoom(id);
             ViewBag.Ave = roomComment.getAve(id);
             roomDao.updateView(id);
             Room obj = roomDao.GetDetail(id);
             ViewBag.Room = obj;
             ViewBag.ListService = serviceDao.GetServices();
+            ViewBag.ListbookingExits = bookingDao.CheckBook(id);
             ViewBag.ListRoomRelated = roomDao.GetRoomByType(obj.idType);
             return View();
         }
@@ -153,18 +155,19 @@ namespace QuanLyKhachSan.Controllers.Public
                 {
                     DateTime dateCheckout = DateTime.Parse(booking.checkOutDate);
                     DateTime dateCheckin = DateTime.Parse(booking.checkInDate);
-                    foreach (Booking checkbooking in checkExist)
-                    {
-                        if((dateCheckin <= DateTime.Parse(checkbooking.checkOutDate) && dateCheckin >= DateTime.Parse(checkbooking.checkInDate)) || (dateCheckout <= DateTime.Parse(checkbooking.checkOutDate) && dateCheckout >= DateTime.Parse(checkbooking.checkInDate)))
-                        {
-                            return RedirectToAction(action, new { mess = "ErrorExist" });
-                        }
-                    }
+                    
                     TimeSpan time = dateCheckout - dateCheckin;
                     int numberBooking = time.Days;
                     if (numberBooking <= 0)
                     {
                         return RedirectToAction(action, new { mess = "Error" });
+                    }
+                    foreach (Booking checkbooking in checkExist)
+                    {
+                        if((dateCheckin <= DateTime.Parse(checkbooking.checkOutDate) && dateCheckin >= DateTime.Parse(checkbooking.checkInDate)) || (dateCheckout <= DateTime.Parse(checkbooking.checkOutDate) && dateCheckout >= DateTime.Parse(checkbooking.checkInDate))|| (dateCheckin <= DateTime.Parse(checkbooking.checkInDate) && dateCheckout >= DateTime.Parse(checkbooking.checkOutDate)))
+                        {
+                            return RedirectToAction(action, new { mess = "ErrorExist" });
+                        }
                     }
                     Room room = roomDao.GetDetail(booking.idRoom);
                     booking.idUser = user.idUser;
@@ -195,6 +198,7 @@ namespace QuanLyKhachSan.Controllers.Public
         {
             string name = form["name"];
             int idType = Int32.Parse(form["idType"]);
+
             int numberChildren = Int32.Parse(form["numberChildren"]);
             int numberAdult = Int32.Parse(form["numberAdult"]);
             return RedirectToAction("Search", new { page = 0, name = name, idType = idType, numberChildren = numberChildren,numberAdult = numberAdult });

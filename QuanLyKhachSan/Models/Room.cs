@@ -24,7 +24,7 @@ namespace QuanLyKhachSan.Models
         public string description { get; set; }
 
         public int discount { get; set; }
-
+        [Range(0, int.MaxValue)]
         public int cost { get; set; }
 
         public int view { get; set; }

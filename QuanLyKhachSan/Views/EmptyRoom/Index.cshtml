@@ -1,0 +1,148 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+@if (ViewBag.mess == "Error")
+{
+
+    <div class="toast" data-delay="1000" style="position:fixed; top: 100PX; left: 10PX;z-index: 2000;width: 300px">
+        <script>
+            swal({
+                title: 'Ngày đi phải lớn hơn ngày đến',
+                /* text: 'Redirecting...', */
+                icon: 'error',
+                timer: 3000,
+                buttons: true,
+                type: 'success'
+            })
+        </script>
+    </div>
+}
+<main>
+    <div class="container-fluid px-4">
+        <h4 class="mt-1">Danh sách phòng trống</h4>
+        <div class="card mb-4">
+            <div class="card-header">
+
+                <form action="/EmptyRoom/Check" method="post">
+                    <div class="fields">
+                        <div class="row">
+
+                            <div class="col-md-6">
+                                <label>Ngày tới:</label>
+                                <div class="form-group">
+                                    <input type="date"  id="checkInDate" class="form-control" name="checkInDate" required placeholder="Email">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label>Ngày đi:</label>
+                                <div class="form-group">
+                                    <input type="date" id="checkOutDate" name="checkOutDate" class="form-control" required placeholder="Date from">
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <input type="submit" value="Kiểm Tra" class="btn btn-primary py-3">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+            <div class="card-body">
+                <table id="datatablesSimple">
+                    <thead style="color:#0d6efd ">
+                        <tr style="background-color: darkgrey">
+                            <th>STT</th>
+                            <th>Tên phòng</th>
+                            <th>Ảnh</th>
+                            <th>Loại phòng</th>
+                            <th>Số lượng người lớn</th>
+                            <th>Số lượng trẻ em</th>
+                            <th>Giá phòng</th>
+                            <th>Giảm giá</th>
+                            <th>Mô tả</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        @{ var stt = 1;}
+                        <input type="hidden" value="@ViewBag.List.Count" id="dodai" />
+                        @foreach (var item in ViewBag.List)
+                        {
+                            var nameModelDes = "exampleModalDes" + item.idRoom;
+                            <tr>
+                                <td style="width:10px">@stt</td>
+                                <td>
+                                    @item.name
+                                </td>
+                                <td>
+                                    <img style="width: 200px !important;height: 150px !important;" src="~/Content/images/@item.image"
+                                         class="img-fluid">
+                                </td>
+                                <td>
+                                    @item.Type.name
+                                </td>
+
+                                <td>
+                                    @item.numberAdult
+                                </td>
+                                <td>
+                                    @item.numberChildren
+                                </td>
+                                <td>
+                                    @item.cost <span>VNĐ</span>
+                                </td>
+                                <td>
+                                    @item.discount <span>%</span>
+                                </td>
+                                <td>
+                                    <a href="" data-bs-toggle="modal" data-bs-target="#@nameModelDes">Xem</a>
+                                </td>
+                                <!-- Modal Descrip-->
+                                <div class="modal fade" id="@nameModelDes" tabindex="-1"
+                                     aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-xl">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">@item.name</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p>@Html.Raw(item.description)</p>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </tr>
+                            stt++;
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script>
+
+        CKEDITOR.replace("editor");
+
+    </script>
+    <script>
+        var dodai = document.getElementById("dodai").value;
+
+        for (var i = 1; i <= dodai; i++) {
+            var name = "comment" + i
+            CKEDITOR.replace(name);
+        }
+    </script>
+</main>
+

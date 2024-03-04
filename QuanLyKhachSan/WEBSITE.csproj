@@ -135,6 +135,7 @@
     <Compile Include="Controllers\Admin\AdminServiceController.cs" />
     <Compile Include="Controllers\Admin\AdminTypeController.cs" />
     <Compile Include="Controllers\Admin\AdminUserController.cs" />
+    <Compile Include="Controllers\Admin\EmptyRoomController.cs" />
     <Compile Include="Controllers\Public\PublicAuthenticationController.cs" />
     <Compile Include="Controllers\Public\PublicBookingController.cs" />
     <Compile Include="Controllers\Public\PublicHomeController.cs" />
@@ -993,6 +994,7 @@
     <Content Include="Views\PublicAuthentication\CheckOTP.cshtml" />
     <Content Include="Views\PublicAuthentication\ForgotPassword.cshtml" />
     <Content Include="Views\PublicAuthentication\ResetPassword.cshtml" />
+    <Content Include="Views\EmptyRoom\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

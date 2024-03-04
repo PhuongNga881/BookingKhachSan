@@ -19,6 +19,10 @@ namespace QuanLyKhachSan.Daos
         {
             return myDb.roomComments.Where(x => x.idRoom == idRoom).OrderByDescending(x => x.createdDate).ToList();
         }
+        public List<RoomComment> GetByImageRoom(int idRoom)
+        {
+            return myDb.roomComments.Where(x => x.idRoom == idRoom).OrderByDescending(x => x.createdDate).ToList();
+        }
 
         public double getAve(int idRoom)
         {

@@ -57,6 +57,7 @@
                             <td>
                                 @item.cost
                             </td>
+                            
                             <td>
                                 @{
                                     var idEx1 = "exampleModalLabel" + item.idService;
@@ -120,7 +121,7 @@
                                                 <div class="mb-3">
                                                     <label for="category-film"
                                                            class="col-form-label">Giá dịch vụ:</label>
-                                                    <input type="number" class="form-control" id="category-film" value="@item.cost" name="cost" required>
+                                                    <input type="number" class="form-control" id="category-film" value="@item.cost" name="cost" required min="0">
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary"
@@ -158,11 +159,14 @@
                                class="col-form-label">Tên dịch vụ:</label>
                         <input type="text" class="form-control" id="category-film" name="name" required>
                     </div>
+                    
                     <div class="mb-3">
                         <label for="category-film"
                                class="col-form-label">Giá dịch vụ:</label>
-                        <input type="number" class="form-control" id="category-film" name="cost" required>
+                        <input type="number" class="form-control" id="category-film" name="cost" required min="0" >
+
                     </div>
+
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary"
                                 data-bs-dismiss="modal">
